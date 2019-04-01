@@ -1,0 +1,38 @@
+{
+  "name": "wurtzite",
+  "version": "1.0.0",
+  "description": "Simple & Solid foundation 4 Node.ts projects",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "serve": "nodemon dist",
+    "dev": "tsc --watch & nodemon dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/davidcp90/wurtzite.git"
+  },
+  "keywords": [
+    "typescript",
+    "boilerplate",
+    "starter",
+    "node",
+    "express"
+  ],
+  "author": "David Camargo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/davidcp90/wurtzite/issues"
+  },
+  "homepage": "https://github.com/davidcp90/wurtzite#readme",
+  "devDependencies": {
+    "nodemon": "^1.18.10",
+    "tslint": "^5.14.0",
+    "typescript": "^3.4.1"
+  },
+  "dependencies": {
+    "@types/express": "^4.16.1",
+    "express": "^4.16.4",
+    "@mercadoni/elementals": "git://github.com/mercadoni/elementals.git#0.3.0"
+  }
+}
