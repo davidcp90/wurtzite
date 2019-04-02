@@ -11,6 +11,9 @@
         "no-console": [
             false
         ],
+        "ordered-imports": [
+            false
+        ],
         "quotemark": [
             true,
             "single"

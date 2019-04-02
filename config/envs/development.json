@@ -1,0 +1,41 @@
+{
+ "server": {
+  "port": 3333,
+  "log_level": "debug"
+ },
+ "errorReporting": {
+  "keyFileName": "path",
+  "id": "projectId"
+ },
+ "metrics": {
+  "port": 3331
+ },
+ "rabbitmq": {
+  "host": "localhost",
+  "username": "rabbituser",
+  "password": "rabbitpwd",
+  "port": 6001
+ },
+ "database": {
+  "type": "postgres",
+  "password": "KHXYOZ&TW1UrzgDaI^Y2jQR6Y8",
+  "database": "wurtzite",
+  "username": "wurtzite",
+  "port": 25432,
+  "debug": true,
+  "synchronize": false,
+  "entities": [
+   "dist/src/entities/*.js"
+  ],
+  "subscribers": [
+   "dist/src/subscribers/*.js"
+  ],
+  "migrations": [
+   "dist/database/migrations/*.js"
+  ],
+  "cli": {
+   "entitiesDir": "src/entities",
+   "migrationsDir": "database/migrations"
+  }
+ }
+}

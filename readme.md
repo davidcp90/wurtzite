@@ -1,5 +1,5 @@
-# ![Wurtzite](https://i.ibb.co/fdWN0jB/wurtzite.png)  Wurtzit e
-Wurtzit is a simple, solid & opinionated foundation for teams desiring to work with Node.js and Typescript.
+# ![Wurtzite](https://i.ibb.co/fdWN0jB/wurtzite.png)  Wurtzite
+Wurtzite is a simple, solid & opinionated foundation for teams desiring to work with Node.js and Typescript.
 
 ## Index
 
@@ -27,11 +27,11 @@ Wurtzit is a simple, solid & opinionated foundation for teams desiring to work w
 ## Structure
 
 ```bash
-| bin --- Server executables
+| bin ---- Server executables
     | www ---- Server init
     | Dockerfile ---- Dockerfile defines container foundations
     | app.ts ---- App initializer
-| config --- config files
+| config ---- config files
     | envs ---- Json (nconf compatible) files to run possible environments
     | ormconfig.ts ---- ORM config depends on envs
 | dist ---- JS compiled files
@@ -39,7 +39,7 @@ Wurtzit is a simple, solid & opinionated foundation for teams desiring to work w
     | migrations ---- database migrations
     | seeds ---- prepopulate the database
 | nginx ---- nginx configuration required by terraform
-| src ----- source code
+| src ----- source code, each folder is exposed as a barrel module
     | controllers ---- They have the main logic of the app (files here must be named controllerName.controller.ts)
     | entities ---- Repositories that map to the database. We use DataMapper with the help of TypeORM. Entities should be named entityName.entity.ts
     | middlewares ---- HTTP middlewares that simplify the logic in the controllers of the app.They should be named middlewareName.middleware.ts
@@ -73,76 +73,36 @@ Configuration is enabled through nconf, and is available under the config folder
 
 ## Installation
 
-Dillinger requires [Node.js](https://nodejs.org/) v4+ to run.
+Make sure that you have Docker and Docker Compose installed on your system. 
 
-Install the dependencies and devDependencies and start the server.
-
+1. Install docker containers and deps
 ```sh
-$ cd dillinger
-$ npm install -d
-$ node app
+$ docker-compose up -d
 ```
-
-For production environments...
-
+2. Install node dependencies
 ```sh
-$ npm install --production
-$ NODE_ENV=production node app
+$ npm i
 ```
 
 ## Development
 
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantanously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
+- Run the app
 ```sh
-$ node app
+$ npm run dev
+```
+- Migrations
+```sh
+// create migration file
+$ npm run mig:add migrationName
+// apply migrations
+$ npm run mig:run
+//Revert migrations
+$ npm run mig:back
 ```
 
-Second Tab:
-```sh
-$ gulp watch
-```
-
-(optional) Third:
-```sh
-$ karma test
-```
 ## Testing
 
-For production release:
+- Run tests
 ```sh
-$ gulp build --prod
-```
-Generating pre-built zip archives for distribution:
-```sh
-$ gulp build dist --prod
-```
-## Deploy
-
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the Dockerfile if necessary. When ready, simply use the Dockerfile to build the image.
-
-```sh
-cd dillinger
-docker build -t joemccann/dillinger:${package.json.version} .
-```
-This will create the dillinger image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on your host. In this example, we simply map port 8000 of the host to port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart="always" <youruser>/dillinger:${package.json.version}
-```
-
-Verify the deployment by navigating to your server address in your preferred browser.
-
-```sh
-127.0.0.1:8000
+$ npm run test
 ```

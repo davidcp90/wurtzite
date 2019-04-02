@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:10
+    container_name: DB-wurtzite
+    ports:
+      - '25432:5432'
+    environment:
+      - POSTGRES_USER=wurtzite
+      - POSTGRES_PASSWORD=KHXYOZ&TW1UrzgDaI^Y2jQR6Y8
+      - POSTGRES_DB=wurtzite
+    volumes:
+      - 'postgres_data:/var/lib/postgresql'
+volumes:
+  postgres_data:

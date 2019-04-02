@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+
+    hawkeye:
+        build:
+            context: .
+            dockerfile: test/Dockerfile
+        image: 'mercadoni/hawkeye'
+        container_name: hawkeye
+        ports:
+            - '3000:80'
+        environment:
+            - PGHOST=postgres
+            - PGDATABASE=hawkeye
+            - PGUSER=hawkeye
+            - PGPASSWORD=zyX1Jw31pOT5OFDUqYgNR93b
+            - POOL__connectionTimeoutMillis=2000
+            - POOL__idleTimeoutMillis=60000
+            - POOL__max=100
+            - LOG_LEVEL=debug
+            - RABBITMQ__HOST=rabbitmq
+            - RABBITMQ__USERNAME=hawkeye
+            - RABBITMQ__PASSWORD=hawkeye
+            - RABBITMQ__PORT=5672
+            - PORT=3000
+            - METRICS_PORT=8080
+        volumes:
+            - .:/var/www/
+        command: ./test/run.sh

@@ -1,0 +1,41 @@
+{
+ "server": {
+  "port": 3333,
+  "log_level": "debug"
+ },
+ "errorReporting": {
+  "keyFileName": "path",
+  "id": "projectId"
+ },
+ "metrics": {
+  "port": 3331
+ },
+ "rabbitmq": {
+  "host": "localhost",
+  "username": "rabbituser",
+  "password": "rabbitpwd",
+  "port": 6001
+ },
+ "database": {
+  "type": "pg",
+  "password": "xxxxxxxx",
+  "database": "databasename",
+  "username": "dbuser",
+  "port": 25432,
+  "debug": true,
+  "synchronize": false,
+  "entities": [
+   "src/entities/*.ts"
+  ],
+  "subscribers": [
+   "src/subscribers/*.ts"
+  ],
+  "migrations": [
+   "database/migrations/*.ts"
+  ],
+  "cli": {
+   "entitiesDir": "src/entities",
+   "migrationsDir": "src/migrations"
+  } 
+ }
+}

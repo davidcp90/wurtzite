@@ -1,0 +1,90 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:10
+    container_name: postgres-hawkeye
+    ports:
+      - '25432:5432'
+    environment:
+      - POSTGRES_USER=hawkeye
+      - POSTGRES_PASSWORD=zyX1Jw31pOT5OFDUqYgNR93b
+    volumes:
+      - 'postgres_data:/var/lib/postgresql'
+
+  rabbitmq:
+    image: rabbitmq:3.7-management-alpine
+    container_name: rabbitmq-hawkeye
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    environment:
+      - RABBITMQ_DEFAULT_USER=hawkeye
+      - RABBITMQ_DEFAULT_PASS=hawkeye
+    volumes:
+      - 'rabbitmq_data:/var/lib/rabbitmq'
+
+  mongodb:
+    image: 'mongo:3.2'
+    container_name: mongodb-hawkeye
+    ports:
+      - '27017:27017'
+    volumes:
+      - 'mongodb_data:/data/db'
+
+  dbmate:
+    image: amacneil/dbmate:v1.4.1
+    container_name: dbmate-hawkeye
+    environment:
+      - DATABASE_URL=postgres://hawkeye:zyX1Jw31pOT5OFDUqYgNR93b@postgres:5432/hawkeye?sslmode=disable
+    volumes:
+      - .:/app
+    command: up
+
+  hawkeye:
+    build: .
+    image: 'mercadoni/hawkeye'
+    container_name: hawkeye
+    ports:
+      - '8000:80'
+    environment:
+      - PGHOST=postgres
+      - PGDATABASE=hawkeye
+      - PGUSER=hawkeye
+      - PGPASSWORD=zyX1Jw31pOT5OFDUqYgNR93b
+      - POOL__connectionTimeoutMillis=2000
+      - POOL__idleTimeoutMillis=60000
+      - POOL__max=100
+      - LOG_LEVEL=debug
+      - RABBITMQ__HOST=rabbitmq
+      - RABBITMQ__USERNAME=hawkeye
+      - RABBITMQ__PASSWORD=hawkeye
+      - RABBITMQ__PORT=5672
+      - PORT=3000
+      - METRICS_PORT=8080
+    volumes:
+      - .:/var/www/
+    depends_on:
+      - rabbitmq
+      - postgres
+      - dbmate
+      - mongodb
+    command: bash -c "./run.sh"
+
+  cli:
+    build:
+      context: .
+      dockerfile: bin/Dockerfile
+    image: 'mercadoni/hawkeye-cli'
+    container_name: hawkeye-cli
+    environment:
+      - LOG_LEVEL=debug
+      - DB_SUFFIX=dev
+    volumes:
+      - .:/var/www/
+    command: bash -c "node bin/cli"
+
+volumes:
+  mongodb_data:
+  rabbitmq_data:
+  postgres_data:
