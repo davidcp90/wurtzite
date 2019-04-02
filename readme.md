@@ -26,7 +26,7 @@ Wurtzit is a simple, solid & opinionated foundation for teams desiring to work w
 
 ## Structure
 
-```sh
+```bash
 | bin --- Server executables
     | www ---- Server init
     | Dockerfile ---- Dockerfile defines container foundations
